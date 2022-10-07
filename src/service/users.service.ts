@@ -29,4 +29,19 @@ export default class UserService {
     });
     return token;
   };
+
+  public getUser = async (payload: IUser): Promise<IUser> => {
+    const [user] = await this.model.getUser(payload);
+    
+    return user as IUser;
+  };
+
+  public login = async (payload: IUser): Promise<string> => {
+    const [{ username, classe, level, password }] = await this.model.getUser(payload);
+    
+    const token = this.generateToken({ username, classe, level, password });
+    console.log(token);
+    
+    return token;
+  };
 }

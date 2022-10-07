@@ -7,9 +7,9 @@ export interface IProduct {
 
 export interface IUser {
   id?: number,
-  username: string,
-  classe: string,
-  level: 10,
+  username?: string,
+  classe?: string,
+  level?: 10,
   password?: string,
 }
 

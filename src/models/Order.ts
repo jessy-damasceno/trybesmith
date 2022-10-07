@@ -12,10 +12,12 @@ export default class Order {
   public getAll = async (): Promise<IOrder[]> => {
     const [result] = await this.connection
       .execute(`
-      SELECT or.id, or.userId, JSON_ARRAYAGG(pr.id) AS productsIds
-      FROM Trybesmith.Orders AS or
-      JOIN Trybesmith.Products AS pr ON pr.orderId = or.id`);
-
+      SELECT ord.id, ord.userId, JSON_ARRAYAGG(pr.id) AS productsIds
+        FROM Trybesmith.Orders AS ord
+        INNER JOIN Trybesmith.Products AS pr ON ord.id = pr.orderId
+        GROUP BY ord.id
+        ORDER BY ord.userId;`);
+    
     return result as IOrder[];
   };
 }

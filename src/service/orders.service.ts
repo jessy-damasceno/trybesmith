@@ -10,7 +10,6 @@ export default class OrderService {
 
   public getAll = async (): Promise<IOrder[]> => {
     const orders = await this.model.getAll();
-
     return orders as IOrder[];
   };
 }

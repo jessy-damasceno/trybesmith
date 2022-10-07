@@ -1,0 +1,32 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import User from '../models/User';
+import { IUser } from '../interfaces';
+
+dotenv.config();
+
+export default class UserService {
+  public model: User;
+
+  public token: string;
+
+  constructor() {
+    this.model = new User();
+    this.token = process.env.JWT_SECRET || 'mySecret';
+  }
+
+  public create = async (user: IUser): Promise<string> => {
+    const newUser = await this.model.create(user);
+    
+    const token = this.generateToken(newUser);
+    return token;
+  };
+
+  private generateToken = (user: IUser): string => {
+    const token = jwt.sign(user, this.token, {
+      expiresIn: '7d',
+      algorithm: 'HS256',
+    });
+    return token;
+  };
+}

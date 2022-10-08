@@ -6,6 +6,6 @@ const user = new UsersController();
 const usersRouter = Router();
 
 usersRouter.route('/')
-  .post(user.create);
+  .post(user.validateFields, user.create);
 
 export default usersRouter;

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import UserService from '../service/users.service';
 import statusCodes from '../utils/statusCodes';
+import { validateNewUser } from '../validations/validations';
 
 export default class UsersController {
   constructor(private userService = new UserService()) { }
@@ -25,6 +26,15 @@ export default class UsersController {
     }
 
     return next();
+  };
+
+  public validateFields = async (req: Request, res: Response, next: NextFunction) => {
+    const error = validateNewUser(req.body);
+
+    if (error.type) {
+      next(error);
+    }
+    next();
   };
 
   public create = async (req: Request, res: Response) => {

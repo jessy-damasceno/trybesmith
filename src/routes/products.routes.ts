@@ -7,6 +7,6 @@ const products = new ProductsController();
 
 productsRouter.route('/')
   .get(products.getAll)
-  .post(products.create);
+  .post(products.validateFields, products.create);
 
 export default productsRouter;

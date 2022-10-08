@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import IError from '../interfaces/@error';
-import { mapError } from '../utils/errorMap';
+import IError from './interfaces/@error';
+import { mapError } from './utils/errorMap';
 
 const errorMiddleware = (err: IError, _req: Request, res: Response, _next: NextFunction) => {
   const { type, message } = err;

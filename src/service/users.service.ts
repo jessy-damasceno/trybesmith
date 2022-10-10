@@ -40,7 +40,6 @@ export default class UserService {
     const [{ username, classe, level, password }] = await this.model.getUser(payload);
     
     const token = this.generateToken({ username, classe, level, password });
-    console.log(token);
     
     return token;
   };

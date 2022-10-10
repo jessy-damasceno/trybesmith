@@ -1,6 +1,6 @@
-import { IProduct, IUser } from '../interfaces';
+import { IOrder, IProduct, IUser } from '../interfaces';
 import typeError from '../utils/typeError';
-import { addProductSchema, addUserSchema } from './schemas';
+import { addOrderSchema, addProductSchema, addUserSchema } from './schemas';
 
 export const validateNewProduct = (payload: IProduct) => {
   const { error } = addProductSchema.validate(payload);
@@ -22,6 +22,27 @@ export const validateNewUser = (payload: IUser) => {
       type: typeError(error.details[0].type),
       message: error.details[0].message,
     }; 
+  }
+  return { type: null };
+};
+
+export const validateNewOrder = (payload: IOrder) => {
+  if (!payload.productsIds) {
+    return {
+      type: 'FIELD_REQUIRED',
+      message: '"productsIds" is required',
+    };
+  }
+
+  const { error } = addOrderSchema.validate(payload);
+
+  console.log(error);
+
+  if (error) {
+    return {
+      type: 'TYPE_ERROR',
+      message: error.details[0].message.replace(/\[\d+\]./, ''),
+    };
   }
   return { type: null };
 };

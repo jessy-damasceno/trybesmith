@@ -11,3 +11,9 @@ export const addUserSchema = Joi.object({
   level: Joi.number().min(1).required(),
   password: Joi.string().min(8).required(),
 });
+
+export const addOrderSchema = Joi.object().keys({
+  productsIds: Joi.array().items(Joi.number().required()),
+}).messages({
+  'array.includesRequiredUnknowns': '"productsIds" must include only numbers',
+});

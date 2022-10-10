@@ -9,6 +9,6 @@ const token = new Token();
 
 ordersRouter.route('/')
   .get(orders.getAll)
-  .post(token.isExists, token.isValid);
+  .post(token.isExists, token.isValid, orders.validateFields);
 
 export default ordersRouter;

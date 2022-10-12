@@ -27,22 +27,14 @@ export const validateNewUser = (payload: IUser) => {
 };
 
 export const validateNewOrder = (payload: IOrder) => {
-  if (!payload.productsIds) {
-    return {
-      type: 'FIELD_REQUIRED',
-      message: '"productsIds" is required',
-    };
-  }
-
   const { error } = addOrderSchema.validate(payload);
-
-  console.log(error);
 
   if (error) {
     return {
-      type: 'TYPE_ERROR',
+      type: typeError(error.details[0].type),
       message: error.details[0].message.replace(/\[\d+\]./, ''),
     };
   }
+
   return { type: null };
 };

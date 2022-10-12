@@ -13,7 +13,7 @@ export const addUserSchema = Joi.object({
 });
 
 export const addOrderSchema = Joi.object().keys({
-  productsIds: Joi.array().items(Joi.number().required()),
+  productsIds: Joi.array().items(Joi.number().required()).required(),
 }).messages({
   'array.includesRequiredUnknowns': '"productsIds" must include only numbers',
 });

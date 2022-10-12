@@ -6,6 +6,9 @@ const typeError = (errorType: string) => {
 
     case 'min':
       return 'LENGTH_ERROR';
+    
+    case 'includesRequiredUnknowns':
+      return 'TYPE_ERROR';
 
     default:
       return 'INVALID_FIELD';

@@ -17,7 +17,7 @@ class Token {
     const token = req.header('Authorization');
   
     if (!token) {
-      next({
+      return next({
         type: 'TOKEN_ERROR',
         message: 'Token not found',
       });
@@ -34,15 +34,13 @@ class Token {
       const user = await this.userService.getUser(payload);
   
       if (!user) {
-        next({ type: 'TOKEN_ERROR', message: 'Invalid token' });
+        return next({ type: 'TOKEN_ERROR', message: 'Invalid token' });
       }
       res.locals.user = user; // User info between middlewares
-      next();
+      return next();
     } catch (err) {
       next({ type: 'TOKEN_ERROR', message: 'Invalid token' });
     }
-
-    next();
   };
 }
 
